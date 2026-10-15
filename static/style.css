@@ -1,0 +1,50 @@
+:root{
+  --yellow:#f5c518; --bg:#0a0a0b; --card:#141416; --line:#26262a;
+  --txt:#f4f2ea; --mut:#a7a29a;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,Arial,sans-serif;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:18px 18px 60px}
+.topbar{display:flex;align-items:center;gap:14px;background:#000;border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.badge{background:var(--yellow);color:#000;font-weight:900;font-size:26px;letter-spacing:1px;padding:4px 12px;border-radius:8px}
+.topbar h1{font-size:23px;margin:0}
+.topbar p{margin:2px 0 0;color:var(--mut);font-size:13px}
+.nav{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.nav a{background:var(--card);border:1px solid var(--line);color:var(--txt);text-decoration:none;padding:9px 16px;border-radius:10px;font-weight:600;font-size:14px}
+.nav a:hover,.nav a.active{border-color:var(--yellow);color:var(--yellow)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:14px 0}
+.card h2{margin:0 0 4px;font-size:20px}
+.card h3{color:var(--yellow);font-size:15px;letter-spacing:.4px;margin:16px 0 8px}
+.sub{color:var(--mut);font-size:13px;margin:0 0 12px}
+textarea{width:100%;background:#0d0d0f;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;min-height:130px;resize:vertical}
+select{background:#0d0d0f;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0}
+.btn{display:inline-block;background:var(--yellow);color:#000;font-weight:800;border:none;border-radius:10px;padding:12px 26px;font-size:16px;cursor:pointer;width:100%;margin-top:10px}
+.btn:hover{filter:brightness(1.08)}
+.btn-ghost{display:inline-block;background:transparent;color:var(--yellow);border:1px solid var(--yellow);border-radius:10px;padding:10px 20px;font-weight:700;text-decoration:none;text-align:center}
+.verdict-pos{background:linear-gradient(135deg,#f5c518,#ffe37a);color:#000;border-radius:12px;padding:16px;font-weight:900;font-size:24px;text-align:center;margin:14px 0}
+.verdict-neg{background:linear-gradient(135deg,#2a2a2e,#17171a);color:var(--yellow);border:1px solid var(--yellow);border-radius:12px;padding:16px;font-weight:900;font-size:24px;text-align:center;margin:14px 0}
+.probs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.prob{background:#000;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.prob b{color:var(--yellow);font-size:22px}
+.prob span{color:var(--mut);font-size:12px}
+.bar{height:10px;background:#222;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar>i{display:block;height:100%;background:var(--yellow)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+th{background:var(--yellow);color:#000;padding:8px;text-align:left}
+td{border-bottom:1px solid var(--line);padding:7px 8px}
+.pill{display:inline-block;background:#000;border:1px solid var(--yellow);color:var(--yellow);border-radius:999px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0}
+.tok-pos{background:rgba(245,197,24,.14);border:1px solid rgba(245,197,24,.6);border-radius:6px;padding:2px 8px;margin:2px;display:inline-block}
+.tok-neg{background:rgba(120,120,130,.14);border:1px solid #55565e;border-radius:6px;padding:2px 8px;margin:2px;display:inline-block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.metric{background:#000;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.metric b{color:var(--yellow);font-size:19px}
+.metric span{color:var(--mut);font-size:12px}
+.err{background:#3a1414;border:1px solid #ff6b6b;color:#ffb3b3;border-radius:10px;padding:12px}
+pre{background:#000;border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:13px}
+code{color:var(--yellow)}
+details{background:#0d0d0f;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:700;color:var(--yellow)}
+.foot{text-align:center;color:#6d6a63;font-size:12px;margin-top:22px}
+img.chart{width:100%;border:1px solid var(--line);border-radius:10px;background:#000}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.steps a{font-size:13px}

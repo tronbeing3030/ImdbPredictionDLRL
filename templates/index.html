@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" id="studio">
+  <h2>🎟️ Section 1 — Studio Mode <span style="color:var(--mut);font-weight:400;font-size:13px">(just the magic)</span></h2>
+  <p class="sub">Type or paste any movie review. No math, no internals — only the verdict.</p>
+  <form method="post" action="{{ url_for('predict') }}">
+    <label for="ex" class="sub">Try an example:</label>
+    <select name="example" id="ex">
+      <option value="">(write my own)</option>
+      <option value="glowing">Glowing review</option>
+      <option value="harsh">Harsh review</option>
+      <option value="mixed">Mixed review</option>
+    </select>
+    <textarea name="review" placeholder="An electrifying masterpiece with stunning performances and a gripping story...">{{ text }}</textarea>
+    <button class="btn" type="submit">🎬 PREDICT SENTIMENT</button>
+  </form>
+  {% if result and result.error %}
+    <p class="err">{{ result.error }}</p>
+  {% endif %}
+  {% if result and result.label %}
+    {% if result.label == "POSITIVE" %}
+      <div class="verdict-pos">🍿 {{ result.label }} &middot; {{ (result.confidence*100)|round(1) }}% confident</div>
+    {% else %}
+      <div class="verdict-neg">🎭 {{ result.label }} &middot; {{ (result.confidence*100)|round(1) }}% confident</div>
+    {% endif %}
+    <div class="probs">
+      <div class="prob"><b>{{ (result.p_pos*100)|round(1) }}%</b><br><span>Positive probability</span><div class="bar"><i style="width:{{ (result.p_pos*100)|round(1) }}%"></i></div></div>
+      <div class="prob"><b>{{ (result.p_neg*100)|round(1) }}%</b><br><span>Negative probability</span><div class="bar"><i style="width:{{ (result.p_neg*100)|round(1) }}%"></i></div></div>
+    </div>
+    <a class="btn-ghost" href="{{ url_for('lab') }}">🔬 See step-by-step how this was decided →</a>
+  {% endif %}
+</div>
+<div class="card">
+  <h2>What lives here</h2>
+  <p class="sub">Studio is deliberately abstract. The full replay — tokens, IDs, padding, evidence words, recurrent unroll — lives in <a href="{{ url_for('lab') }}" style="color:var(--yellow)">Lab Simulation</a>; scores for all five recurrent architectures live in the <a href="{{ url_for('arena') }}" style="color:var(--yellow)">Model Arena</a>; the write-up lives in the <a href="{{ url_for('report') }}" style="color:var(--yellow)">Report</a>.</p>
+  {% if metrics and metrics.production %}
+  <div class="grid">
+    <div class="metric"><b>{{ (metrics.production.accuracy*100)|round(2) }}%</b><br><span>Production accuracy</span></div>
+    <div class="metric"><b>{{ metrics.production.f1|round(3) }}</b><br><span>F1 score</span></div>
+    <div class="metric"><b>{{ metrics.vocab_size }}</b><br><span>Vocabulary</span></div>
+    <div class="metric"><b>{{ metrics.train_size }} / {{ metrics.test_size }}</b><br><span>Train / test reviews</span></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

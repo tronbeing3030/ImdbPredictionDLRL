@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>📜 Project Report — Activity-2 · Problem 1 · IMDb Sequential Text Prediction</h2>
+  <p class="sub">Problem statement, approach, architecture, results, and how to reproduce.</p>
+  <h3>1 · What this project is</h3>
+  <p>Sequential text prediction on <b>IMDb movie reviews</b>: given a review as a word sequence, predict <b>POSITIVE</b> or <b>NEGATIVE</b> sentiment. It answers Activity-2 Problem 1 using the IMDB dataset choice, implementing all Required Implementation steps (collect → clean → tokenize → numericalize → pad → build/run RNN variants) and all Solutions 1–10.</p>
+  <h3>2 · How it is made</h3>
+  <p><b>Data:</b> 50,000 real IMDb reviews (25k train / 25k test) via <code>src/data_loader2.py</code> with HF → Stanford → polarity fallbacks. <b>Preprocessing</b> (<code>src/preprocess.py</code>): lowercase, strip HTML, remove punctuation, tokenize, build 20k-word vocabulary (+PAD/UNK), encode, post-pad to length 200. <b>Models:</b> five recurrent nets built from scratch in NumPy with Adam — SimpleRNN, BiRNN, 2-layer Deep RNN, LSTM, GRU (<code>src/rnn_*.py</code>). <b>Production head:</b> TF-IDF + Logistic Regression served by <code>src/inference.py</code> for instant, high-accuracy predictions with word-evidence and an unrolled recurrence trace.</p>
+  <h3>3 · Results</h3>
+  {% if metrics and metrics.production %}
+  <div class="grid">
+    <div class="metric"><b>{{ (metrics.production.accuracy*100)|round(2) }}%</b><br><span>Production accuracy</span></div>
+    <div class="metric"><b>{{ metrics.production.f1|round(3) }}</b><br><span>F1</span></div>
+    {% for c in metrics.comparison %}
+    <div class="metric"><b>{{ (c.test_acc*100)|round(2) }}%</b><br><span>{{ c.architecture }}</span></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <h3>4 · Solution mapping</h3>
+  <table>
+    <tr><th>Requirement</th><th>Where</th></tr>
+    <tr><td>1 · Basic RNN from scratch</td><td><code>src/rnn_base.py</code></td></tr>
+    <tr><td>2 · Train on IMDb sequences</td><td><code>src/train_model.py</code>, <code>src/data_loader2.py</code></td></tr>
+    <tr><td>3 · Predict next word / sentiment</td><td><code>src/inference.py</code> + Studio page</td></tr>
+    <tr><td>4 · LSTM + GRU</td><td><code>src/rnn_lstm.py</code>, <code>src/rnn_gru.py</code></td></tr>
+    <tr><td>5 · Bidirectional RNN</td><td><code>src/rnn_bi.py</code></td></tr>
+    <tr><td>6 · Deep RNN</td><td>2-layer stack in <code>src/train_model.py</code></td></tr>
+    <tr><td>7 · Overfitting analysis</td><td>train vs val gaps in metrics; Arena curves</td></tr>
+    <tr><td>8 · Hybrid comparison</td><td>Arena table</td></tr>
+    <tr><td>9 · Deploy as web app</td><td><code>app_flask.py</code> (this site) + <code>/api/predict</code></td></tr>
+    <tr><td>10 · Gradients demo</td><td>Arena chart + <code>static/grad_chart.png</code></td></tr>
+  </table>
+  <h3>5 · Run it</h3>
+  <pre>py -3.12 -m pip install -r requirements.txt
+py -3.12 -m src.train_model
+py -3.12 app_flask.py
+# open http://127.0.0.1:5000</pre>
+  <h3>6 · API</h3>
+  <pre>POST /api/predict  {"review": "A brilliant, moving masterpiece"}
+→ {"label": "POSITIVE", "p_pos": 0.99, ...}</pre>
+  <details><summary>Full PROJECT_REPORT.md</summary><pre>{{ report_text }}</pre></details>
+</div>
+{% endblock %}

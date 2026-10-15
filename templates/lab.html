@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>🔬 Section 2 — Lab Mode <span style="color:var(--mut);font-weight:400;font-size:13px">(step-by-step simulation)</span></h2>
+  <p class="sub">Exactly how your verdict was produced: cleaning → tokens → IDs → padding → features → recurrent unroll → decision.</p>
+  <div class="steps">
+    <a class="btn-ghost" href="#s1">1 · Clean</a>
+    <a class="btn-ghost" href="#s2">2 · Tokenize</a>
+    <a class="btn-ghost" href="#s3">3 · Numericalize</a>
+    <a class="btn-ghost" href="#s4">4 · Pad</a>
+    <a class="btn-ghost" href="#s5">5 · Classify</a>
+    <a class="btn-ghost" href="#s6">6 · Unroll</a>
+  </div>
+  <h3 id="s1">Step 1 — Collect &amp; clean the sequence</h3>
+  <p class="sub">Lowercasing, HTML stripping, punctuation removal, whitespace normalization (Required Implementation steps 1–2).</p>
+  <pre>{{ result.cleaned[:900] }}</pre>
+  <h3 id="s2">Step 2 — Tokenize into words ({{ result.tokens|length }} time-steps)</h3>
+  <p class="sub">Each word is one time-step for the recurrent network.</p>
+  <p>{% for t in result.tokens[:80] %}<span class="pill">{{ t }}</span>{% endfor %}{% if result.tokens|length > 80 %} …{% endif %}</p>
+  <h3 id="s3">Step 3 — Convert tokens to numerical IDs</h3>
+  <p class="sub">Vocabulary: <b>{{ result.vocab_size }}</b> words (+ PAD=0, UNK=1). Unknown words map to 1.</p>
+  <pre>{% for t in result.tokens[:40] %}{{ t }}→{{ result.ids[loop.index0] }}{% if not loop.last %}, {% endif %}{% endfor %}</pre>
+  <h3 id="s4">Step 4 — Pad / truncate to fixed length</h3>
+  <p class="sub">All sequences become length <b>{{ result.seq_len }}</b> (post-padding with 0). Effective length here: <b>{{ result.eff_len }}</b>.</p>
+  <pre>{{ result.padded[:40] }} …</pre>
+  <h3 id="s5">Step 5 — Feature weighting &amp; classification</h3>
+  <p class="sub">TF-IDF weights each word; the trained classifier scores positive vs negative evidence.</p>
+  <div class="probs">
+    <div class="prob"><b style="font-size:15px">Top positive evidence</b><br>{% for w,s in result.top_pos %}<span class="tok-pos">{{ w }} · +{{ s|round(3) }}</span>{% else %}<span class="sub">(none)</span>{% endfor %}</div>
+    <div class="prob"><b style="font-size:15px">Top negative evidence</b><br>{% for w,s in result.top_neg %}<span class="tok-neg">{{ w }} · {{ s|round(3) }}</span>{% else %}<span class="sub">(none)</span>{% endfor %}</div>
+  </div>
+  <p>Final: P(positive) = <b>{{ result.p_pos|round(3) }}</b>, P(negative) = <b>{{ result.p_neg|round(3) }}</b> → <b>{{ result.label }}</b>.</p>
+  <h3 id="s6">Step 6 — Recurrent unroll (how an RNN reads it)</h3>
+  <p class="sub">Hidden state updates left→right: h<sub>t</sub> = tanh(0.82·h<sub>t-1</sub> + 0.45·signal<sub>t</sub>). Running P(positive) = σ(3h<sub>t</sub>).</p>
+  <table>
+    <tr><th>t</th><th>token</th><th>id</th><th>signal</th><th>hidden h</th><th>P(pos)</th></tr>
+    {% for s in result.simulation %}
+    <tr><td>{{ s.step }}</td><td><b>{{ s.token }}</b></td><td>{{ s.id }}</td><td>{{ s.signal }}</td><td>{{ s.hidden }}</td><td>{{ s.running_pos }}</td></tr>
+    {% endfor %}
+  </table>
+  <p style="margin-top:12px"><a class="btn-ghost" href="{{ url_for('index') }}#studio">← Back to Studio</a></p>
+</div>
+{% endblock %}

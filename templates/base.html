@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMDb Cinema Sentiment Lab</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="badge">IMDb</div>
+    <div><h1>Cinema Sentiment Lab</h1>
+    <p>Activity-2 &middot; Problem 1 &middot; Sequential Text Prediction &middot; IMDB Movie Reviews &middot; RNN vs BiRNN vs Deep RNN vs LSTM vs GRU</p></div>
+  </div>
+  <div class="nav">
+    <a href="{{ url_for('index') }}" class="{% if request.endpoint=='index' %}active{% endif %}">🎟️ Studio</a>
+    <a href="{{ url_for('lab') }}" class="{% if request.endpoint=='lab' %}active{% endif %}">🔬 Lab Simulation</a>
+    <a href="{{ url_for('arena') }}" class="{% if request.endpoint=='arena' %}active{% endif %}">🏟️ Model Arena</a>
+    <a href="{{ url_for('report') }}" class="{% if request.endpoint=='report' %}active{% endif %}">📜 Report</a>
+  </div>
+  {% block content %}{% endblock %}
+  <p class="foot">IMDb Cinema Sentiment Lab &middot; Activity-2 &middot; Black &amp; Yellow aesthetic 🍿</p>
+</div>
+</body>
+</html>

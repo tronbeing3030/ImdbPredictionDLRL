@@ -1,0 +1,49 @@
+=== ImdbPredictionDLRL training ===
+[data] HF mirror: train=25000 test=25000
+[prep] vocab=10000
+[prod] TF-IDF+LR acc=0.9002 f1=0.9005
+[rnn] training Simple RNN ...
+  Simple RNN ep 1/6 loss=0.6932 acc=0.5059 val_loss=0.6908 val_acc=0.5517
+  Simple RNN ep 2/6 loss=0.5972 acc=0.7944 val_loss=0.7462 val_acc=0.5133
+  Simple RNN ep 3/6 loss=0.2587 acc=0.9056 val_loss=1.0426 val_acc=0.5033
+  Simple RNN ep 4/6 loss=0.0935 acc=0.9706 val_loss=1.3124 val_acc=0.4883
+  Simple RNN ep 5/6 loss=0.0368 acc=0.9868 val_loss=1.3913 val_acc=0.4983
+  Simple RNN ep 6/6 loss=0.0189 acc=0.9962 val_loss=1.6105 val_acc=0.5067
+[rnn] Simple RNN test_acc=0.4970
+[rnn] training BiRNN ...
+  BiRNN ep 1/6 loss=0.6923 acc=0.5150 val_loss=0.6818 val_acc=0.5567
+  BiRNN ep 2/6 loss=0.5301 acc=0.7641 val_loss=0.7307 val_acc=0.5683
+  BiRNN ep 3/6 loss=0.2262 acc=0.9282 val_loss=0.9321 val_acc=0.5600
+  BiRNN ep 4/6 loss=0.0432 acc=0.9926 val_loss=1.0375 val_acc=0.5833
+  BiRNN ep 5/6 loss=0.0073 acc=1.0000 val_loss=1.1394 val_acc=0.5850
+  BiRNN ep 6/6 loss=0.0022 acc=1.0000 val_loss=1.2408 val_acc=0.5733
+[rnn] BiRNN test_acc=0.5735
+[rnn] training Deep RNN ...
+  Deep RNN ep 1/6 loss=0.6925 acc=0.5179 val_loss=0.6423 val_acc=0.6067
+  Deep RNN ep 2/6 loss=0.5093 acc=0.7629 val_loss=0.9277 val_acc=0.5250
+  Deep RNN ep 3/6 loss=0.1588 acc=0.9394 val_loss=1.2842 val_acc=0.5217
+  Deep RNN ep 4/6 loss=0.0443 acc=0.9859 val_loss=1.3644 val_acc=0.5667
+  Deep RNN ep 5/6 loss=0.0198 acc=0.9935 val_loss=1.7778 val_acc=0.5367
+  Deep RNN ep 6/6 loss=0.0095 acc=0.9965 val_loss=1.7427 val_acc=0.5300
+[rnn] Deep RNN test_acc=0.5455
+[rnn] training LSTM ...
+  LSTM ep 1/6 loss=0.6928 acc=0.5132 val_loss=0.6901 val_acc=0.5700
+  LSTM ep 2/6 loss=0.6189 acc=0.6871 val_loss=0.5722 val_acc=0.7200
+  LSTM ep 3/6 loss=0.3748 acc=0.8479 val_loss=0.6098 val_acc=0.6983
+  LSTM ep 4/6 loss=0.2031 acc=0.9309 val_loss=0.6682 val_acc=0.7283
+  LSTM ep 5/6 loss=0.1029 acc=0.9697 val_loss=0.7731 val_acc=0.7267
+  LSTM ep 6/6 loss=0.0570 acc=0.9868 val_loss=0.8333 val_acc=0.6883
+[rnn] LSTM test_acc=0.6885
+[rnn] training GRU ...
+  GRU ep 1/6 loss=0.6893 acc=0.5206 val_loss=0.6354 val_acc=0.6300
+  GRU ep 2/6 loss=0.4901 acc=0.7774 val_loss=0.5305 val_acc=0.7533
+  GRU ep 3/6 loss=0.2199 acc=0.9221 val_loss=0.6498 val_acc=0.7483
+  GRU ep 4/6 loss=0.1054 acc=0.9659 val_loss=0.8290 val_acc=0.7283
+  GRU ep 5/6 loss=0.0522 acc=0.9862 val_loss=1.0646 val_acc=0.7117
+  GRU ep 6/6 loss=0.0303 acc=0.9926 val_loss=1.2377 val_acc=0.7200
+[rnn] GRU test_acc=0.7155
+[seq] L=30 acc=0.5363
+[seq] L=60 acc=0.5100
+[seq] L=120 acc=0.4688
+[seq] L=200 acc=0.6825
+[done] prod_acc=0.9002 elapsed=273.4s

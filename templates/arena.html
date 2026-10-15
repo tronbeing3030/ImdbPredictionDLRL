@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>🏟️ Model Arena — RNN vs BiRNN vs Deep RNN vs LSTM vs GRU</h2>
+  <p class="sub">All five recurrent architectures trained from scratch (NumPy + Adam) on real IMDb sequences, plus the production classifier.</p>
+  {% if metrics and metrics.production %}
+  <div class="grid">
+    <div class="metric"><b>{{ (metrics.production.accuracy*100)|round(2) }}%</b><br><span>Production accuracy</span></div>
+    <div class="metric"><b>{{ metrics.production.f1|round(3) }}</b><br><span>F1 score</span></div>
+    <div class="metric"><b>{{ metrics.production.precision|round(3) }}</b><br><span>Precision</span></div>
+    <div class="metric"><b>{{ metrics.production.recall|round(3) }}</b><br><span>Recall</span></div>
+    <div class="metric"><b>{{ metrics.vocab_size }}</b><br><span>Vocabulary</span></div>
+    <div class="metric"><b>{{ metrics.data_source }}</b><br><span>Data</span></div>
+  </div>
+  <h3>Hybrid comparison (Solution 8)</h3>
+  <table>
+    <tr><th>Architecture</th><th>Test acc</th><th>Val acc</th><th>Seq len</th></tr>
+    {% for c in metrics.comparison %}
+    <tr><td><b>{{ c.architecture }}</b></td><td>{{ (c.test_acc*100)|round(2) }}%</td><td>{{ (c.val_acc*100)|round(2) }}%</td><td>{{ c.seq_len }}</td></tr>
+    {% endfor %}
+  </table>
+  <h3>Effect of sequence length (step 8)</h3>
+  <table>
+    <tr><th>Sequence length</th><th>Test acc</th></tr>
+    {% for s in metrics.seq_study %}
+    <tr><td>{{ s.seq_len }}</td><td>{{ (s.test_acc*100)|round(2) }}%</td></tr>
+    {% endfor %}
+  </table>
+  <p class="sub">Longer windows carry more context but make gradients travel further — the classic short vs long-term dependency trade-off. The gated models (LSTM/GRU) hold up best at length.</p>
+  <h3>Vanishing / exploding gradients (step 10)</h3>
+  <p class="sub">{{ metrics.grad_study.note }}</p>
+  <img class="chart" src="{{ url_for('static', filename='grad_chart.png') }}" alt="Gradient decay chart">
+  <h3>Training curves per architecture</h3>
+  <img class="chart" src="{{ url_for('static', filename='curves.png') }}" alt="Training curves">
+  {% else %}
+  <p class="err">Metrics not found. Run: <code>py -3.12 -m src.train_model</code></p>
+  {% endif %}
+</div>
+{% endblock %}
