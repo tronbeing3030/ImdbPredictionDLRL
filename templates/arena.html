@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>🏟️ Model Arena — RNN vs BiRNN vs Deep RNN vs LSTM vs GRU</h2>
+  <h2>Model Arena: RNN vs BiRNN vs Deep RNN vs LSTM vs GRU</h2>
   <p class="sub">All five recurrent architectures trained from scratch (NumPy + Adam) on real IMDb sequences, plus the production classifier.</p>
   {% if metrics and metrics.production %}
   <div class="grid">
-    <div class="metric"><b>{{ (metrics.production.accuracy*100)|round(2) }}%</b><br><span>Production accuracy</span></div>
-    <div class="metric"><b>{{ metrics.production.f1|round(3) }}</b><br><span>F1 score</span></div>
-    <div class="metric"><b>{{ metrics.production.precision|round(3) }}</b><br><span>Precision</span></div>
-    <div class="metric"><b>{{ metrics.production.recall|round(3) }}</b><br><span>Recall</span></div>
-    <div class="metric"><b>{{ metrics.vocab_size }}</b><br><span>Vocabulary</span></div>
-    <div class="metric"><b>{{ metrics.data_source }}</b><br><span>Data</span></div>
+    <div class="metric"><b>{{ (metrics.production.accuracy*100)|round(2) }}%</b><span>Production accuracy</span></div>
+    <div class="metric"><b>{{ metrics.production.f1|round(3) }}</b><span>F1 score</span></div>
+    <div class="metric"><b>{{ metrics.production.precision|round(3) }}</b><span>Precision</span></div>
+    <div class="metric"><b>{{ metrics.production.recall|round(3) }}</b><span>Recall</span></div>
+    <div class="metric"><b>{{ metrics.vocab_size }}</b><span>Vocabulary</span></div>
+    <div class="metric"><b>{{ metrics.data_source }}</b><span>Data</span></div>
   </div>
   <h3>Hybrid comparison (Solution 8)</h3>
   <table>
