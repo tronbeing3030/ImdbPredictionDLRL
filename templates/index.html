@@ -1,33 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" id="studio">
-  <h2>Section 1: Studio Mode</h2>
-  <p class="sub">Type or paste any movie review</p>
+  <h2>Studio Mode</h2>
   <form method="post" action="{{ url_for('predict') }}">
-    <label for="ex" class="sub">Try an example:</label>
+    <div class="form">
+  <p class="sub">Type or paste any movie review. Try an example:
     <select name="example" id="ex">
       <option value="">Custom review</option>
       <option value="glowing">Good review</option>
       <option value="harsh">Bad review</option>
       <option value="mixed">Mixed review</option>
-    </select>
-    <textarea name="review" placeholder="An electrifying masterpiece with stunning performances and a gripping story...">{{ text }}</textarea>
-    <button class="btn" type="submit">PREDICT SENTIMENT</button>
+    </select></p>
+      <textarea name="review" placeholder="An electrifying masterpiece with stunning performances and a gripping story..."></textarea>
+      <button class="btn predict" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path></svg></button>
+    </div>
   </form>
   {% if result and result.error %}
     <p class="err">{{ result.error }}</p>
   {% endif %}
+  <div class="result">
   {% if result and result.label %}
     {% if result.label == "POSITIVE" %}
-      <div class="verdict-pos">{{ result.label }} &middot; {{ (result.confidence*100)|round(1) }}% confident</div>
+      <div class="verdict-pos"><div class="percent">{{ (result.confidence*100)|round(1) }}%</div><div class="perc-label">{{ result.label }}</div></div>
     {% else %}
-      <div class="verdict-neg">{{ result.label }} &middot; {{ (result.confidence*100)|round(1) }}% confident</div>
+      <div class="verdict-neg"><div class="percent">{{ (result.confidence*100)|round(1) }}%</div><div class="perc-label">{{ result.label }}</div></div>
     {% endif %}
-    <div class="probs">
-      <div class="prob"><b>{{ (result.p_pos*100)|round(1) }}%</b><br><span>Positive probability</span><div class="bar"><i style="width:{{ (result.p_pos*100)|round(1) }}%"></i></div></div>
-      <div class="prob"><b>{{ (result.p_neg*100)|round(1) }}%</b><br><span>Negative probability</span><div class="bar"><i style="width:{{ (result.p_neg*100)|round(1) }}%"></i></div></div>
+    <div class="probs pos-val">
+      <div class="text">
+        <div class="rvw-head">Review</div>
+        <div class="rvw-txt">{{ text }}</div>
+      </div>
+      <div class="prob pos-vals">
+        <div class="val-metric">
+          <b>{{ (result.p_pos*100)|round(1) }}%</b>
+          <span>Positive probability</span>
+        </div>
+        <div class="val-metric negative">
+          <b>{{ (result.p_neg*100)|round(1) }}%</b>
+          <span>Negative probability</span>
+        </div>
+      </div>
+      <div class="prob">
+        <div class="bar">
+          <i style="width:{{ (result.p_pos*100)|round(1) }}%"></i>
+        </div>
+      </div>
     </div>
-    <a class="btn-ghost" href="{{ url_for('lab') }}">See step-by-step how this was decided <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></a>
+    </div>
+    <a class="btn-ghost bck-btn" href="{{ url_for('lab') }}">See step-by-step how this was decided <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></a>
   {% endif %}
 </div>
 <div class="card">
